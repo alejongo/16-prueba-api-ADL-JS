@@ -11,14 +11,14 @@
 </head>
 <body>
     
-    <main class="w-3/4 mx-auto mt-10 flex flex-col gap-5 md:grid grid-cols-2 gap-5 ">
-        <section id="conversor" class="w-full bg-gray-100 rounded-lg p-4">
+    <main class="w-5/6 max-w-[600px] min-width-[450px] mx-auto mt-10 gap-5 grid-cols-1 bg-gray-100 p-5">
+        <section id="conversor" class="w-full  rounded-lg p-4 grid grid-cols-1 gap-5">
             
             <div class="grid grid-cols-1">
                 <h1 class="text-center font-bold text-indigo-800 text-lg uppercase">Money Exchange</h1>
                 <div class="flex justify-center mt-5 w-full">
                     <div class="text-neutral-500 flex items-center pl-1 pr-1 bg-neutral-200 text-xs rounded-l-md outline outline-neutral-400">CLP <span class="font-bold ml-1">$</span></div>
-                    <input id="inputCurrency" type="text" class="w-1/2 bg-white outline outline-neutral-400  pl-2" value="1">
+                    <input id="inputCurrency" type="text" class="w-1/2  bg-white outline outline-neutral-400 pl-2" value="1">
                     <!-- <div class="ml-2 mr-2 text-neutral-600 flex items-center"> <i class="fa-solid fa-arrow-right-long"></i></div> -->
                     <div>
                         <select name="currencyToConvert" id="currencySelector" class="font-bold text-white rounded-r-md outline outline-1 outline-indigo-400 p-1 bg-indigo-400 hover:outline hover:outline-indigo-300 hover:bg-indigo-300 hover:cursor-pointer focus:outline focus:outline-1 focus:none">
@@ -35,17 +35,18 @@
                     </div>
                 </div>
             </div>
-            
         </section>
-        <section id="MoneyGraph" class="h-48 w-full  outline outline-gray-200 rounded p-4">
-            <div id="graphTitle">
-                <h2 class="text-center text-lg font-bold text-rose-500">Comportamiento del USD</h2>
-                <div class="h-32 w-full outline">
-                    <canvas id="chart" class=""></canvas>
+        <section class="mt-5">
+            <div id="MoneyGraph" class="h-min[600px] w-4/6 mx-auto outline outline-gray-200 bg-white rounded p-4" >
+                <div id="graphTitle">
+                    <h2 class="text-center text-lg font-bold text-rose-500 mb-5">Comportamiento del USD</h2>
+                    <div class="h-full w-full ">
+                        <canvas id="chart" class="h-auto"></canvas>
+                    </div>
                 </div>
             </div>
-            <div></div>
         </section>
+        
     </main>
     <script src="./assets/js/script.js"></script>
     
