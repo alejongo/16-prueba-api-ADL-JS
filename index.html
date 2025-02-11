@@ -6,13 +6,16 @@
     <title>Document</title>
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <script src="https://kit.fontawesome.com/320e9aad38.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
 </head>
 <body>
-    <h1>Conversor de monedas</h1>
+    
     <main class="w-3/4 mx-auto mt-10 flex flex-col gap-5 md:grid grid-cols-2 gap-5 ">
-        <section id="conversor" class="h-48 w-full bg-gray-100 rounded p-4">
+        <section id="conversor" class="w-full bg-gray-100 rounded-lg p-4">
             
             <div class="grid grid-cols-1">
+                <h1 class="text-center font-bold text-indigo-800 text-lg uppercase">Money Exchange</h1>
                 <div class="flex justify-center mt-5 w-full">
                     <div class="text-neutral-500 flex items-center pl-1 pr-1 bg-neutral-200 text-xs rounded-l-md outline outline-neutral-400">CLP <span class="font-bold ml-1">$</span></div>
                     <input id="inputCurrency" type="text" class="w-1/2 bg-white outline outline-neutral-400  pl-2" value="1">
@@ -25,7 +28,7 @@
                     </div>
                 </div>
                 <div class="mt-6 flex flex-col items-center">
-                    <p class="text-neutral-600 text-sm">Tus <span id="textTotal">$1</span> convertidos equivalen a:</p>
+                    <p class="text-neutral-600 text-[0.75rem]">Tus <span id="textTotal">$1</span> convertidos equivalen a:</p>
                     <div class="flex justify-center mt-3 w-full">
                         <div id="convertedCurrencyLabel" class="text-neutral-500 flex items-center p-1.5  bg-neutral-200 text-xs  rounded-l-md outline outline-neutral-400">USD <span class="font-bold ml-1">$</span></div>
                         <input id="totalConvertedMoney" type="text" class="w-3/5 bg-white outline outline-neutral-400 rounded-r-md pl-2" >
@@ -34,8 +37,17 @@
             </div>
             
         </section>
-        <section id="MoneyGraph" class="h-48 w-full  outline outline-gray-200 rounded p-4"></section>
+        <section id="MoneyGraph" class="h-48 w-full  outline outline-gray-200 rounded p-4">
+            <div id="graphTitle">
+                <h2 class="text-center text-lg font-bold text-rose-500">Comportamiento del USD</h2>
+                <div class="h-32 w-full outline">
+                    <canvas id="chart" class=""></canvas>
+                </div>
+            </div>
+            <div></div>
+        </section>
     </main>
     <script src="./assets/js/script.js"></script>
+    
 </body>
 </html>
