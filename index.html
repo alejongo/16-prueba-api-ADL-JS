@@ -11,14 +11,14 @@
 </head>
 <body>
     
-    <main class="w-5/6 max-w-[600px] min-width-[450px] mx-auto mt-10 gap-5 grid-cols-1 bg-gray-100 p-5">
-        <section id="conversor" class="w-full  rounded-lg p-4 grid grid-cols-1 gap-5">
+    <main class="w-5/6 max-w-[600px] min-width-[450px] mx-auto mt-10 gap-5 grid-cols-1 bg-gray-100 p-5 rounded-lg shadow">
+        <section id="conversor" class="w-full   p-4 grid grid-cols-1 gap-5">
             
             <div class="grid grid-cols-1">
                 <h1 class="text-center font-bold text-indigo-800 text-lg uppercase">Money Exchange</h1>
                 <div class="flex justify-center mt-5 w-full">
                     <div class="text-neutral-500 flex items-center pl-1 pr-1 bg-neutral-200 text-xs rounded-l-md outline outline-neutral-400">CLP <span class="font-bold ml-1">$</span></div>
-                    <input id="inputCurrency" type="text" class="w-1/2  bg-white outline outline-neutral-400 pl-2" value="1">
+                    <input id="inputCurrency" type="text" class="w-1/2  bg-white outline outline-neutral-400 pl-2" value="">
                     <!-- <div class="ml-2 mr-2 text-neutral-600 flex items-center"> <i class="fa-solid fa-arrow-right-long"></i></div> -->
                     <div>
                         <select name="currencyToConvert" id="currencySelector" class="font-bold text-white rounded-r-md outline outline-1 outline-indigo-400 p-1 bg-indigo-400 hover:outline hover:outline-indigo-300 hover:bg-indigo-300 hover:cursor-pointer focus:outline focus:outline-1 focus:none">
@@ -31,18 +31,18 @@
                     <p class="text-neutral-600 text-[0.75rem]">Tus <span id="textTotal">$1</span> convertidos equivalen a:</p>
                     <div class="flex justify-center mt-3 w-full">
                         <div id="convertedCurrencyLabel" class="text-neutral-500 flex items-center p-1.5  bg-neutral-200 text-xs  rounded-l-md outline outline-neutral-400">USD <span class="font-bold ml-1">$</span></div>
-                        <input id="totalConvertedMoney" type="text" class="w-3/5 bg-white outline outline-neutral-400 rounded-r-md pl-2" >
+                        <input id="totalConvertedMoney" type="text" class="w-3/5 bg-white outline outline-neutral-400 rounded-r-md pl-2" value="1">
                     </div>
                 </div>
             </div>
         </section>
         <section class="mt-5">
-            <div id="MoneyGraph" class="h-min[600px] w-4/6 mx-auto outline outline-gray-200 bg-white rounded p-4" >
+            <div id="MoneyGraph" class="h-min[600px] w-4/6 mx-auto outline outline-gray-200 bg-white rounded-lg p-4" >
                 <div id="graphTitle">
-                    <h2 class="text-center text-lg font-bold text-rose-500 mb-5">Comportamiento del USD</h2>
-                    <div class="h-full w-full ">
-                        <canvas id="chart" class="h-auto"></canvas>
-                    </div>
+                    <h2 class="text-center text-lg font-bold text-rose-500 mb-5">Comportamiento del <span id="currencyTypeGraph" class="capitalize"></span></h2>
+                </div>
+                <div class="h-full w-full ">
+                    <canvas id="chart" class="h-auto"></canvas>
                 </div>
             </div>
         </section>

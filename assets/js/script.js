@@ -9,23 +9,34 @@ const convertedCurrencyLabel = document.getElementById(
 );
 let chart = document.getElementById("chart");
 
-const getMoneyValue = async (currencyType = "dolar") => {
-  const res = await fetch(`https://mindicador.cl/api/${currencyType}`);
-  const data = await res.json();
+const currencyTypeGraph = document.getElementById("currencyTypeGraph");
 
-  //console.log(data);
-  return data;
+// Fetch Data
+const getMoneyValue = async (currencyType = "dolar") => {
+  try {
+    const res = await fetch(`https://mindicador.cl/api/${currencyType}`);
+    const data = await res.json();
+
+    //console.log(data);
+    return data;
+  } catch (error) {
+    console.log(error.message);
+  }
 };
 
 // Convert Money
 const moneyConvertion = async (quantity = 1) => {
   const currentMoneyData = await getMoneyValue(currencySelector.value);
   const currentMoneyValue = currentMoneyData.serie[0]["valor"];
+  quantity = inputCurrency.value || currentMoneyValue;
 
   // Convert money
-  const convertedMoneyValue = Number(quantity) * currentMoneyValue;
+  const convertedMoneyValue = Number(quantity) / currentMoneyValue;
+  const currentValueFormated = currentMoneyValue.toLocaleString("es-MX");
   const formatedValue = convertedMoneyValue.toLocaleString("es-MX");
 
+  // Show pesos per dolar
+  inputCurrency.setAttribute("value", currentValueFormated);
   // Show Total converted
   totalConvertedMoney.setAttribute("value", formatedValue);
 };
@@ -46,32 +57,31 @@ currencySelector.addEventListener("change", () => {
   const selectedIndex =
     currencySelector.options[currencySelector.selectedIndex];
   convertedCurrencyLabel.innerHTML = `${selectedIndex.text} <span class="font-bold ml-1">$</span>`;
+  currencyTypeGraph.innerHTML = selectedIndex.text;
 });
 
 //TODO
 
 // Graph Money Historic data
-const getMoneyGraphData = async (shortedData) => {
+const getMoneyGraphData = async (dataMoney) => {
   //const moneyData = await getMoneyValue(currencySelector.value);
 
   const graphType = "line";
-  const title = "Money Value";
-  const lineColor = "red";
+  const title = "Value";
+  const lineColor = "rgb(255, 228, 230)";
 
-  const shortedArray = shortedData.serie.splice(10);
+  const shortedArray = dataMoney.serie.splice(10);
   console.log(shortedArray);
-  // const sorted = shortedData.serie.sort((a, b) => new Date(a) - new Date(b));
-  // console.log(sorted);
 
   // Variables grafica
-  const labels = shortedData.serie.map((serie) => {
+  const labels = dataMoney.serie.map((serie) => {
     return serie.fecha.slice(0, 10);
   });
 
   labels.sort((a, b) => new Date(b) - new Date());
   console.log(labels);
 
-  const data = shortedData.serie.map((serie) => {
+  const data = dataMoney.serie.map((serie) => {
     return serie.valor;
   });
 
@@ -80,12 +90,22 @@ const getMoneyGraphData = async (shortedData) => {
   // Configuracion de la grafica
   const config = {
     type: graphType,
+    options: {
+      plugins: {
+        legend: {
+          display: false,
+        },
+      },
+    },
     data: {
       labels: labels,
       datasets: [
         {
           label: title,
           backgroundColor: lineColor,
+          borderColor: "rgb(251, 113, 133)",
+          tension: 0.5,
+          fill: true,
           data: data,
         },
       ],
@@ -100,7 +120,13 @@ const renderGraph = async () => {
   const data = await getMoneyValue();
   const config = await getMoneyGraphData(data);
 
+  // Get Selected option Index
+  const selectedIndex =
+    currencySelector.options[currencySelector.selectedIndex];
+  currencyTypeGraph.innerHTML = `${selectedIndex.text}`;
+
   chart.style.backgroundColor = "white";
+
   new Chart(chart, config);
 };
 
