@@ -7,6 +7,7 @@ const textTotal = document.getElementById("textTotal");
 const convertedCurrencyLabel = document.getElementById(
   "convertedCurrencyLabel"
 );
+const canvasContainer = document.getElementById("canvasContainer");
 let chart = document.getElementById("chart");
 
 const currencyTypeGraph = document.getElementById("currencyTypeGraph");
@@ -25,7 +26,7 @@ const getMoneyValue = async (currencyType = "dolar") => {
 };
 
 // Convert Money
-const moneyConvertion = async (quantity = 1) => {
+const moneyConvertion = async (quantity) => {
   const currentMoneyData = await getMoneyValue(currencySelector.value);
   const currentMoneyValue = currentMoneyData.serie[0]["valor"];
   quantity = inputCurrency.value || currentMoneyValue;
@@ -52,26 +53,28 @@ inputCurrency.addEventListener("input", (e) => {
 currencySelector.addEventListener("change", () => {
   getMoneyValue(currencySelector.value);
   moneyConvertion(inputCurrency.value);
-  //renderGraph();
+
   // Get Selected option Index
   const selectedIndex =
     currencySelector.options[currencySelector.selectedIndex];
   convertedCurrencyLabel.innerHTML = `${selectedIndex.text} <span class="font-bold ml-1">$</span>`;
   currencyTypeGraph.innerHTML = selectedIndex.text;
+
+  if (chart) {
+    chart.remove();
+    canvasContainer.innerHTML = `<canvas id="chart" class="h-auto"></canvas>`;
+    chart = document.getElementById("chart");
+    renderGraph();
+  }
 });
 
-//TODO
-
 // Graph Money Historic data
-const getMoneyGraphData = async (dataMoney) => {
-  //const moneyData = await getMoneyValue(currencySelector.value);
-
+const getMoneyGraphData = (dataMoney) => {
   const graphType = "line";
   const title = "Value";
   const lineColor = "rgb(255, 228, 230)";
 
-  const shortedArray = dataMoney.serie.splice(10);
-  console.log(shortedArray);
+  dataMoney.serie.splice(10);
 
   // Variables grafica
   const labels = dataMoney.serie.map((serie) => {
@@ -79,7 +82,6 @@ const getMoneyGraphData = async (dataMoney) => {
   });
 
   labels.sort((a, b) => new Date(b) - new Date());
-  console.log(labels);
 
   const data = dataMoney.serie.map((serie) => {
     return serie.valor;
@@ -117,8 +119,8 @@ const getMoneyGraphData = async (dataMoney) => {
 
 // Render Graph
 const renderGraph = async () => {
-  const data = await getMoneyValue();
-  const config = await getMoneyGraphData(data);
+  const data = await getMoneyValue(currencySelector.value);
+  const config = getMoneyGraphData(data);
 
   // Get Selected option Index
   const selectedIndex =
