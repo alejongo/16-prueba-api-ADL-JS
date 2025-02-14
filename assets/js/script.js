@@ -3,7 +3,6 @@ const currencySelector = document.getElementById("currencySelector");
 const quantity = inputCurrency.value;
 const totalConvertedMoney = document.getElementById("totalConvertedMoney");
 const convertedCurrency = document.getElementById("convertedCurrency");
-const textTotal = document.getElementById("textTotal");
 const convertedCurrencyLabel = document.getElementById(
   "convertedCurrencyLabel"
 );
@@ -45,7 +44,6 @@ const moneyConvertion = async (quantity) => {
 // Get realtime input value
 inputCurrency.addEventListener("input", (e) => {
   const inputValue = e.target.value;
-  textTotal.innerHTML = `$${inputValue}`;
   moneyConvertion(inputValue);
 });
 
